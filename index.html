@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sajan Tharusha</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+/* ---------------- GLOBAL ---------------- */
+body{
+  background:#121212;
+  color:white;
+}
+.vh-100{min-height:100vh;}
+.object-fit-cover{object-fit:cover;width:100%;height:100%;}
+
+/* ---------------- GLASS CARD ---------------- */
+.glass-card{
+  backdrop-filter:blur(10px);
+}
+
+/* ---------------- PROJECT CARD ---------------- */
+.project-card{
+  background:rgba(84,84,84,.7);
+  border-radius:15px;
+  overflow:hidden;
+  height:380px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+  transition:transform .6s ease;
+  opacity: 0;
+  transform: translateY(60px);
+}
+.project-card.active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 1s ease, transform 1s ease, box-shadow 0.6s ease;
+}
+.project-card:hover{
+  transform:translateY(-10px);
+}
+.project-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition: transform 0.8s ease;
+}
+.project-card:hover img {
+  transform: scale(1.1);
+}
+
+.tags span{
+  background:rgba(255,255,255,.2);
+  padding:5px 10px;
+  border-radius:10px;
+  font-size:.8rem;
+  margin-right:5px;
+  transition: all 0.3s ease;
+}
+.tags span:hover {
+  transform: translateY(-3px);
+  background: rgba(255,255,255,0.35);
+}
+
+a{
+  color:white;
+  text-decoration:none;
+  position: relative;
+}
+a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: white;
+  transition: width 0.4s ease;
+}
+a:hover::after {
+  width: 100%;
+}
+a:hover{text-decoration:underline}
+
+/* ---------------- CAROUSEL ---------------- */
+.carousel-item{
+  transition:transform 2s ease-in-out!important;
+}
+.carousel-control-prev,
+.carousel-control-next{
+  width:50px;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon{
+  background:rgba(255,255,255,.3);
+  border-radius:50%;
+  padding:18px;
+  backdrop-filter:blur(10px);
+}
+.carousel-indicators [data-bs-target]{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:rgba(255,255,255,.5);
+}
+.carousel-indicators .active{
+  background:#fff;
+}
+
+/* ---------------- MOBILE FIX ---------------- */
+@media(max-width:768px){
+  .vh-100{min-height:60vh;}
+
+  .glass-card{
+    padding:1.5rem!important;
+    margin:0 1rem;
+  }
+
+  .project-card{
+    height:auto;
+  }
+
+  .project-card .row{
+    flex-direction:column;
+  }
+
+  .project-card img{
+    height:220px;
+  }
+
+  .project-card h4{
+    font-size:1.1rem;
+  }
+
+  .project-card p{
+    font-size:.95rem;
+  }
+}
+/* ---------------- SOCIAL RAIL ---------------- */
+.social-icon.fs-5{font-size:1.05rem}
+.bottom-button{right:12px;bottom:12px;padding:8px 10px}
+/* ---------------- PILL CONTROLS ---------------- */
+.pill-controls {
+  position: fixed;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background: #fff;
+  border-radius: 60px;
+  padding: 10px 32px;
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  box-shadow: 0 15px 40px rgba(0,0,0,.55);
+  opacity: 0;
+  transform: translateX(-50%) translateY(80px);
+  transition: all 0.9s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+.pill-controls.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.pill-btn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  transition: opacity .25s ease;
+}
+.pill-btn:hover { opacity: .6; }
+
+.icon-up,
+.icon-down {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+.icon-up { border-bottom: 18px solid #000; }
+.icon-down { border-top: 18px solid #000; }
+
+.icon-square {
+  width: 16px;
+  height: 16px;
+  background: #000;
+}
+
+/* ---------------- SOCIAL RAIL ---------------- */
+.social-rail{
+  position:fixed;
+  right:14px;
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  z-index:1060;
+}
+.social-rail a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:44px;
+  height:44px;
+  background:rgba(255,255,255,0.04);
+  border-radius:10px;
+  color:rgba(255,255,255,0.9);
+  text-decoration:none;
+  transition: all .3s ease;
+  opacity: 0;
+  transform: translateX(80px);
+}
+.social-rail a.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.social-rail a:nth-child(1).visible { transition-delay: 0.6s; }
+.social-rail a:nth-child(2).visible { transition-delay: 0.8s; }
+.social-rail a:nth-child(3).visible { transition-delay: 1.0s; }
+.social-rail a:nth-child(4).visible { transition-delay: 1.2s; }
+.social-rail a:hover{
+  background:rgba(228, 228, 228, 0.12);
+  color:#ffffff;
+  transform:translateX(-6px) scale(1.15);
+}
+@media(max-width:768px){.social-rail{display:none}}
+
+/* ---------------- HERO ANIMATIONS ---------------- */
+.hero-title, .hero-subtitle, .hero-desc, .profile-img {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 1s ease;
+}
+.animate-in .hero-title { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
+.animate-in .hero-subtitle { opacity: 1; transform: translateY(0); transition-delay: 0.6s; }
+.animate-in .hero-desc { opacity: 1; transform: translateY(0); transition-delay: 0.9s; }
+.animate-in .profile-img { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
+
+.profile-img:hover {
+  transform: scale(1.12);
+}
+</style>
+</head>
+<body>
+
+<!-- ================= CONTROLS ================= -->
+<div class="pill-controls">
+  <button class="pill-btn" onclick="prevProject()" title="Previous">
+    <div class="icon-up"></div>
+  </button>
+  <button class="pill-btn" onclick="resetProject()" title="Reset">
+    <div class="icon-square"></div>
+  </button>
+  <button class="pill-btn" onclick="nextProject()" title="Next">
+    <div class="icon-down"></div>
+  </button>
+</div>
+
+<!-- ================= HERO ================= -->
+<section class="vh-100 d-flex align-items-center justify-content-center position-relative" id="page1">
+  <img src="assets/img/background.jpg" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover">
+  <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-75"></div>
+
+  <div class="card glass-card bg-dark bg-opacity-75 border-0 text-white shadow-lg p-5 rounded-3 position-relative animate-in" style="max-width:800px;">
+    <div class="row align-items-center text-center text-md-start">
+      <div class="col-md-3 mb-4 mb-md-0 text-center">
+        <img src="assets/img/profile.png" class="rounded-circle shadow profile-img" style="width:120px;height:120px;object-fit:cover;">
+      </div>
+      <div class="col-md-9">
+        <h1 class="fw-bold display-5 mb-2 hero-title">Sajan Tharusha</h1>
+        <h5 class="fw-semibold mb-3 hero-subtitle">Software Engineer</h5>
+        <p class="fs-5 text-secondary mb-0 hero-desc">
+          Designer • Web Developer • Mobile App Developer
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section class="py-5 position-relative" id="page2">
+  <img src="assets/img/background2.jpg" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" style="z-index:-1;">
+
+  <div class="container py-5">
+    <h2 class="text-center fw-bold display-6 mb-2">Featured Projects</h2>
+    <p class="text-center text-secondary mb-5">Modern UI projects showcase</p>
+
+    <div id="projectsCarousel" class="carousel slide">
+      <div class="carousel-inner">
+
+        <!-- Project 1 -->
+        <div class="carousel-item active">
+          <div class="d-flex justify-content-center">
+            <div class="col-11 col-md-8 col-lg-6">
+              <div class="project-card active">
+                <div class="row g-0 h-100">
+                  <div class="col-md-5">
+                    <img src="assets/img/project1.jpg">
+                  </div>
+                  <div class="col-md-7 p-4">
+                    <h4>WEB Game</h4>
+                    <p>Apilagesadu is a fun, educational, and interactive web game.</p>
+                    <div class="tags mb-3">
+                      <span>HTML</span><span>CSS</span><span>JS</span>
+                    </div>
+                    <a href="https://github.com/Sajaantharusha/QUIZ-COMPETITION-">View Project ↗</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="carousel-item">
+          <div class="d-flex justify-content-center">
+            <div class="col-11 col-md-8 col-lg-6">
+              <div class="project-card">
+                <div class="row g-0 h-100">
+                  <div class="col-md-5">
+                    <img src="assets/img/project2.png">
+                  </div>
+                  <div class="col-md-7 p-4">
+                    <h4>UI/UX Design</h4>
+                    <p>Asana is a humancentered solution, and my responsibility is designing the UI/UX of the website.</p>
+                    <div class="tags mb-3">
+                      <span>figma</span><span>photoshop</span>
+                    </div>
+                    <a href="#">View Project ↗</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="carousel-item">
+          <div class="d-flex justify-content-center">
+            <div class="col-11 col-md-8 col-lg-6">
+              <div class="project-card">
+                <div class="row g-0 h-100">
+                  <div class="col-md-5">
+                    <img src="assets/img/project3.jpg">
+                  </div>
+                  <div class="col-md-7 p-4">
+                    <h4>PHP WEB Application</h4>
+                    <p>This is my coursework. My responsibilities include designing the UI/UX, developing the backend of the website, and implementing security features.</p>
+                    <div class="tags mb-3">
+                      <span>HTML</span><span>CSS</span><span>JS</span><span>PHP</span><span>Bootstrap</span>
+                    </div>
+                    <a href="#">View Project ↗</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="text-center text-white py-4" style="background:#1a1a1a;">
+  <div class="container">
+    <p class="mb-2 small text-secondary">
+      Built with <span class="text-white fw-semibold">VibeCode</span> • Bootstrap
+    </p>
+  </div>
+</footer>
+
+<!-- Right-side social rail -->
+<div class="social-rail" aria-hidden="false">
+  <a href="https://github.com/Sajaantharusha" class="social-icon" aria-label="GitHub">
+    <i class="bi bi-github"></i>
+  </a>
+  <a href="https://www.linkedin.com/in/Sajaantharusha" class="social-icon" aria-label="LinkedIn">
+    <i class="bi bi-linkedin"></i>
+  </a>
+  <a href="https://www.instagram.com/sajaantharusha" class="social-icon" aria-label="Instagram">
+    <i class="bi bi-instagram"></i>
+  </a>
+  <a href="https://X.com/Sajaantharusha" class="social-icon" aria-label="X (Twitter)">
+    <i class="bi bi-twitter-x"></i>
+  </a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Carousel setup
+  const carouselElement = document.getElementById('projectsCarousel');
+  const carousel = new bootstrap.Carousel(carouselElement, {
+    interval: false,
+    ride: false
+  });
+
+  const heroSection = document.getElementById('page1');
+  const projectSection = document.getElementById('page2');
+  const projectCards = document.querySelectorAll('.project-card');
+
+  // Scroll helpers
+  function scrollToHero() {
+    heroSection.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function scrollToProjects() {
+    projectSection.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Pill buttons
+  function prevProject() {
+    carousel.prev();
+    scrollToProjects();
+  }
+
+  function nextProject() {
+    carousel.next();
+    scrollToProjects();
+  }
+
+  function resetProject() {
+    carousel.to(0);
+    scrollToHero();
+  }
+
+  // Animate project card when carousel slides
+  carouselElement.addEventListener('slid.bs.carousel', function () {
+    projectCards.forEach(card => card.classList.remove('active'));
+    const activeCard = document.querySelector('.carousel-item.active .project-card');
+    if (activeCard) activeCard.classList.add('active');
+  });
+
+  // Load animations
+  window.addEventListener('load', () => {
+    // Hero section fade-in
+    document.querySelector('.glass-card').classList.add('animate-in');
+
+    // Pill controls bounce in
+    document.querySelector('.pill-controls').classList.add('visible');
+
+    // Social rail icons slide in one by one
+    const socialLinks = document.querySelectorAll('.social-rail a');
+    socialLinks.forEach((link, index) => {
+      setTimeout(() => {
+        link.classList.add('visible');
+      }, 600 + index * 200);
+    });
+  });
+</script>
+
+</body>
+</html>
