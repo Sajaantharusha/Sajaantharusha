@@ -30,12 +30,17 @@ cards.forEach(card => {
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         
-        // This adds a subtle radial gradient that follows the mouse
-        card.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,77,0,0.1) 0%, var(--bg-card-hover) 40%, var(--bg-card) 100%)`;
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        const glowColor = isLight ? 'rgba(255,77,0,0.06)' : 'rgba(255,77,0,0.1)';
+        const hoverBg = isLight ? '#fafafa' : 'var(--bg-card-hover)';
+        const baseBg = isLight ? '#ffffff' : 'var(--bg-card)';
+        
+        card.style.background = `radial-gradient(circle at ${x}px ${y}px, ${glowColor} 0%, ${hoverBg} 40%, ${baseBg} 100%)`;
     });
     
     card.addEventListener('mouseleave', () => {
-        card.style.background = 'var(--bg-card)';
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        card.style.background = isLight ? '#ffffff' : 'var(--bg-card)';
     });
 });
 
@@ -66,3 +71,30 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+// ========== Theme Toggle ==========
+(function() {
+    // Apply saved theme immediately (before paint) to avoid flash
+    const savedTheme = localStorage.getItem('sajan-theme') || 'dark';
+    if (savedTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggleBtn = document.getElementById('theme-toggle');
+        if (!toggleBtn) return;
+
+        toggleBtn.addEventListener('click', () => {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            
+            if (currentTheme === 'light') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('sajan-theme', 'dark');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                localStorage.setItem('sajan-theme', 'light');
+            }
+        });
+    });
+})();
