@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write Post — Sajan Tharusha</title>
+    <meta name="description" content="Create a new blog post on Sajan Tharusha's portfolio.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="blog-styles.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="tech-navbar">
+        <div class="tech-nav-line"></div>
+        <div class="tech-nav-left">
+            <a href="index.html" class="tech-tab"><span class="tab-text">HOME</span></a>
+            <a href="index.html#about" class="tech-tab"><span class="tab-text">ABOUT</span></a>
+            <a href="index.html#projects" class="tech-tab"><span class="tab-text">PROJECTS</span></a>
+            <a href="blog.html" class="tech-tab active"><span class="tab-text">BLOG</span></a>
+            <a href="index.html#contact" class="tech-tab"><span class="tab-text">CONTACT</span></a>
+        </div>
+        <div class="tech-nav-center">
+            <div class="tech-center-bg">
+                <span class="tech-logo">SAJAN<span class="tech-accent">DEV</span></span>
+            </div>
+        </div>
+        <div class="tech-nav-right">
+            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle light/dark theme">
+                <span class="toggle-icon sun-icon">☀️</span>
+                <span class="toggle-icon moon-icon">🌙</span>
+            </button>
+            <div class="tech-decor">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <div class="tech-info">
+                <span class="tech-date">2026-08-23</span> <span class="tech-divider">|</span> <span
+                    class="tech-weather">☁️ 25°C</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Write Post Section -->
+    <section class="write-section">
+        <div class="write-header">
+            <a href="blog.html" class="back-link">← BACK TO BLOG</a>
+            <h1 class="write-title">CREATE <span class="accent-text">NEW POST</span></h1>
+        </div>
+
+        <form id="blog-form" class="blog-editor-form">
+            <!-- Cover Image Upload -->
+            <div class="editor-field cover-upload-field">
+                <label class="field-label">COVER IMAGE</label>
+                <div class="cover-upload-area" id="cover-upload-area">
+                    <input type="file" id="cover-input" accept="image/*" hidden>
+                    <div class="upload-placeholder" id="upload-placeholder">
+                        <span class="upload-icon">🖼️</span>
+                        <p>Click or drag to upload a cover image</p>
+                        <span class="upload-hint">PNG, JPG, WebP — max 5MB</span>
+                    </div>
+                    <img id="cover-preview" class="cover-preview" alt="Cover preview" style="display: none;">
+                    <button type="button" id="remove-cover" class="remove-cover-btn" style="display: none;">✕</button>
+                </div>
+            </div>
+
+            <!-- Title -->
+            <div class="editor-field">
+                <label class="field-label" for="post-title">TITLE</label>
+                <input type="text" id="post-title" class="editor-input editor-title-input"
+                    placeholder="Enter your post title..." required maxlength="120">
+                <div class="char-count"><span id="title-count">0</span>/120</div>
+            </div>
+
+            <!-- Category -->
+            <div class="editor-field">
+                <label class="field-label">CATEGORY</label>
+                <div class="category-selector">
+                    <button type="button" class="cat-btn active" data-category="tutorial">📚 TUTORIAL</button>
+                    <button type="button" class="cat-btn" data-category="devlog">🛠️ DEVLOG</button>
+                    <button type="button" class="cat-btn" data-category="thoughts">💭 THOUGHTS</button>
+                    <button type="button" class="cat-btn" data-category="news">📰 NEWS</button>
+                </div>
+            </div>
+
+            <!-- Tags -->
+            <div class="editor-field">
+                <label class="field-label" for="post-tags">TAGS</label>
+                <input type="text" id="post-tags" class="editor-input"
+                    placeholder="e.g. javascript, react, webdev (comma separated)">
+            </div>
+
+            <!-- Content Editor -->
+            <div class="editor-field">
+                <label class="field-label">CONTENT</label>
+                <div class="editor-toolbar">
+                    <button type="button" class="toolbar-btn" data-cmd="bold" title="Bold"><b>B</b></button>
+                    <button type="button" class="toolbar-btn" data-cmd="italic" title="Italic"><i>I</i></button>
+                    <button type="button" class="toolbar-btn" data-cmd="underline" title="Underline"><u>U</u></button>
+                    <span class="toolbar-divider"></span>
+                    <button type="button" class="toolbar-btn" data-cmd="insertUnorderedList" title="Bullet List">•
+                        List</button>
+                    <button type="button" class="toolbar-btn" data-cmd="insertOrderedList" title="Numbered List">1.
+                        List</button>
+                    <span class="toolbar-divider"></span>
+                    <button type="button" class="toolbar-btn" data-cmd="formatBlock" data-value="H2"
+                        title="Heading">H2</button>
+                    <button type="button" class="toolbar-btn" data-cmd="formatBlock" data-value="H3"
+                        title="Subheading">H3</button>
+                    <button type="button" class="toolbar-btn" data-cmd="formatBlock" data-value="BLOCKQUOTE"
+                        title="Quote">❝</button>
+                    <span class="toolbar-divider"></span>
+                    <button type="button" class="toolbar-btn" data-cmd="createLink" title="Insert Link">🔗</button>
+                    <button type="button" class="toolbar-btn" data-cmd="insertHorizontalRule" title="Divider">—</button>
+                </div>
+                <div id="post-content" class="editor-content" contenteditable="true"
+                    data-placeholder="Start writing your blog post..."></div>
+            </div>
+
+            <!-- Excerpt -->
+            <div class="editor-field">
+                <label class="field-label" for="post-excerpt">EXCERPT (SHORT PREVIEW)</label>
+                <textarea id="post-excerpt" class="editor-input editor-textarea"
+                    placeholder="A brief summary of your post (shown on blog cards)..." maxlength="200" rows="3"></textarea>
+                <div class="char-count"><span id="excerpt-count">0</span>/200</div>
+            </div>
+
+            <!-- Actions -->
+            <div class="editor-actions">
+                <button type="button" id="save-draft" class="btn-draft">
+                    💾 SAVE DRAFT
+                </button>
+                <button type="submit" class="btn-publish">
+                    🚀 PUBLISH POST
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Success Toast -->
+    <div id="toast" class="toast-notification">
+        <span class="toast-icon">✅</span>
+        <span class="toast-message" id="toast-message">Post published successfully!</span>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="blog.js"></script>
+</body>
+
+</html>

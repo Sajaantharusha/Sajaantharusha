@@ -1130,6 +1130,19 @@ p {
         drop-shadow(3px 4px 5px rgba(0, 0, 0, 0.4)) drop-shadow(1px 1px 0px rgba(255, 255, 255, 0.15));
 }
 
+.icon-3d-instagram,
+.icon-3d-facebook,
+.icon-3d-website,
+.icon-3d-tiktok,
+.icon-3d-threads,
+.icon-3d-linkedin {
+    width: 44px;
+    height: 44px;
+    fill: #1f1f1f;
+    filter:
+        drop-shadow(3px 4px 5px rgba(0, 0, 0, 0.4)) drop-shadow(1px 1px 0px rgba(255, 255, 255, 0.15));
+}
+
 /* Featured Projects Section */
 .featured-section {
     padding: 8rem 5%;
