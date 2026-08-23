@@ -335,9 +335,10 @@ p {
     flex: 1;
     display: flex;
     justify-content: flex-end;
-    align-items: center;
+    align-items: flex-end; /* Change to flex-end so hologram sits at the bottom of graphic */
     position: relative;
     z-index: 1;
+    align-self: flex-end; /* Align the entire graphic container to the bottom of hero */
 }
 
 /* Cyberpunk Hero Styles */
@@ -908,8 +909,9 @@ p {
     }
 
     .hero-graphic {
-        margin-top: 3rem;
+        margin-top: auto;
         justify-content: center;
+        align-self: center; /* Reset to center on mobile horizontally */
     }
 
     /* Adjust Tech Navbar for mobile */
