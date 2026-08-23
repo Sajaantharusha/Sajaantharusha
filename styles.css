@@ -949,6 +949,14 @@ p {
     }
 
     .tech-nav-right {
+        /* Keep parent in DOM so fixed button renders */
+        display: block;
+        width: 0;
+        height: 0;
+    }
+
+    .tech-nav-right .tech-decor,
+    .tech-nav-right .tech-info {
         display: none;
     }
 
